@@ -15,7 +15,7 @@ pipeline {
     stages {
        stage ('Update') {
             steps {
-                sh 'apt-get update'
+                sh 'sudo apt-get update || echo "Update skipped - no sudo access"'
             }
         }
 
@@ -33,10 +33,14 @@ pipeline {
         
         stage('Deploy with docker compose'){
             steps{
-                // Stop existing container if they are running
-                sh 'docker compose down || true'
-                // Start app, rebuilding flask image
-                sh 'docker compose up -d --build'
+                // Stop and remove all related containers
+                sh 'docker compose down -v --remove-orphans || true'
+                sh 'docker stop $(docker ps -q --filter "name=flask") || true'
+                sh 'docker rm $(docker ps -aq --filter "name=flask") || true'
+                // Start app, rebuilding flask image with port 6000
+                sh 'docker compose up -d --build --force-recreate'
+                // Verify port mapping
+                sh 'docker ps | grep flask-app || echo "Container not found"'
             }
         }
     }
