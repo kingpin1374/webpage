@@ -4,7 +4,7 @@ pipeline {
     
     environment {
         APP_NAME = 'webpage'
-        APP_PORT = '6000'
+        APP_PORT = '9000'
         DOCKER_IMAGE = 'flask-app'
     }
     
