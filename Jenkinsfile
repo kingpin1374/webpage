@@ -21,8 +21,7 @@ pipeline {
 
         stage('Clone repo'){
             steps{
-                git branch: 'master', url: 'https://github.com/kingpin1374/webpage.git'
-                credentialsId: 'github'
+                git branch: 'master', url: 'https://github.com/kingpin1374/webpage.git', credentialsId: 'github'
             }
         }
         
