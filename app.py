@@ -18,7 +18,7 @@ products = [
 
 @app.route('/')
 def home():
-    return render_template('index.html', title="Welcome to Elite Uniforms")
+    return render_template('index.html', title="Welcome to Uniform wala")
 
 @app.route('/about')
 def about():
